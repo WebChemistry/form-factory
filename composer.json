@@ -1,7 +1,9 @@
 {
     "name": "webchemistry/form-factory",
     "autoload": {
-        "WebChemistry\\FormFactory\\": "src"
+        "psr-4": {
+            "WebChemistry\\FormFactory\\": "src"
+        }
     },
     "require": {
         "php": ">= 7.4",
