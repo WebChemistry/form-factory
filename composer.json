@@ -1,0 +1,14 @@
+{
+    "name": "webchemistry/form-factory",
+    "autoload": {
+        "WebChemistry\\FormFactory\\": "src"
+    },
+    "require": {
+        "php": ">= 7.4",
+        "nette/forms": "^3.0"
+    },
+    "require-dev": {
+        "nette/di": "^3.0",
+        "nette/application": "^3.0"
+    }
+}
