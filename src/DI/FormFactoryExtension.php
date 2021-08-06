@@ -7,6 +7,8 @@ use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use WebChemistry\FormFactory\FormFactoryComposite;
+use WebChemistry\FormFactory\FormFactoryDecorator;
+use WebChemistry\FormFactory\FormFactoryInterface;
 
 final class FormFactoryExtension extends CompilerExtension
 {
@@ -14,8 +16,7 @@ final class FormFactoryExtension extends CompilerExtension
 	public function getConfigSchema(): Schema
 	{
 		return Expect::structure([
-			'default' => Expect::string()->required(),
-			'factories' => Expect::arrayOf(Expect::anyOf(Expect::string(), Expect::type(Statement::class))),
+			'factory' => Expect::string()->required(),
 		]);
 	}
 
@@ -24,16 +25,14 @@ final class FormFactoryExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 		$config = $this->getConfig();
 
-		$composite = $builder->addDefinition($this->prefix('formFactoryComposite'))
-			->setFactory(FormFactoryComposite::class, [$config->default]);
+		$factory = $builder->addDefinition($this->prefix('formFactory'))
+			->setType(FormFactoryInterface::class)
+			->setFactory($config->factory)
+			->setAutowired(false);
 
-		foreach ($config->factories as $name => $factory) {
-			$def = $builder->addDefinition($this->prefix('factory.' . $name))
-				->setFactory($factory)
-				->setAutowired(false);
-
-			$composite->addSetup('addFactory', [$name, $def]);
-		}
+		$builder->addDefinition($this->prefix('decorator'))
+			->setType(FormFactoryInterface::class)
+			->setFactory(FormFactoryDecorator::class, [$factory]);
 	}
 
 }

@@ -2,13 +2,10 @@
 
 ```neon
 extensions:
-	form.factories: WebChemistry\FormFactory\DI\FormFactoryExtension
+	form.factory: WebChemistry\FormFactory\DI\FormFactoryExtension
 
-form.factories:
-	default: front
-	factories:
-		front: WebChemistry\FormFactory\DefaultFormFactory
-		back: App\FormFactory
+form.factory:
+	factory: FormFactory
 ```
 
 ```php

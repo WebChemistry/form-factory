@@ -6,7 +6,7 @@
         }
     },
     "require": {
-        "php": ">= 7.4",
+        "php": ">= 8.0",
         "nette/forms": "^3.0"
     },
     "require-dev": {
